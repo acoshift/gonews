@@ -1,0 +1,27 @@
+{{define "root-body"}}
+<div>
+  <h1>Create new News</h1>
+  <form class="ui form" method="POST" enctype="multipart/form-data">
+    <div class="field">
+      <label>Title</label>
+      <input name="title">
+    </div>
+    <div class="field">
+      <label>Image</label>
+      <input type="file" name="image">
+    </div>
+    <div class="field">
+      <label>Detail</label>
+      <textarea name="detail"></textarea>
+    </div>
+    <button class="ui blue submit button" type="submit">Create</button>
+    <a class="ui red button" href="/admin/list">Cancel</a>
+  </form>
+</div>
+{{end}}
+
+{{define "root-script"}}
+{{end}}
+
+{{define "root-style"}}
+{{end}}

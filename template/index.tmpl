@@ -1,12 +1,17 @@
 {{define "root-body"}}
 <div>
-  Index Page
+  <a href="/admin/login">Login</a>
+  <br>
+  <ul>
+  {{range .List}}
+    <li><a href="/news/{{.ID.Hex}}">{{.Title}}</a></li>
+  {{end}}
+  </ul>
 </div>
 {{end}}
 
 {{define "root-script"}}
 <script>
-  console.log("index")
 </script>
 {{end}}
 

@@ -1,0 +1,16 @@
+{{define "root-body"}}
+<div>
+  News<br>
+  <h1>{{.Title}}</h1><br>
+  {{if .Image}}
+  <img src="{{.Image}}">
+  {{end}}
+  <p>{{.Detail}}</p>
+</div>
+{{end}}
+
+{{define "root-script"}}
+{{end}}
+
+{{define "root-style"}}
+{{end}}
