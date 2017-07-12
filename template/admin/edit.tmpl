@@ -1,6 +1,22 @@
 {{define "root-body"}}
 <div>
-  Admin Edit
+  <h1>Edit News</h1>
+  <form class="ui form" method="POST" enctype="multipart/form-data">
+    <div class="field">
+      <label>Title</label>
+      <input name="title" value="{{.Title}}">
+    </div>
+    <div class="field">
+      <label>Image</label>
+      <input type="file" name="image">
+    </div>
+    <div class="field">
+      <label>Detail</label>
+      <textarea name="detail">{{.Detail}}</textarea>
+    </div>
+    <button class="ui blue submit button" type="submit">Save</button>
+    <a class="ui red button" href="/admin/list">Cancel</a>
+  </form>
 </div>
 {{end}}
 

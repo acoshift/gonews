@@ -9,16 +9,7 @@
       <label>Password</label>
       <input type="password" name="password">
     </div>
-    <button class="ui submit blue button">Login</button>
-    {{if .Flash.errors}}
-    <div class="ui red message">
-      <ul>
-        {{range .Flash.errors}}
-          <li>{{.}}</li>
-        {{end}}
-      </ul>
-    </div>
-    {{end}}
+    <button class="ui submit blue button">Register</button>
   </form>
 </div>
 {{end}}

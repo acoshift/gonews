@@ -1,10 +1,7 @@
 package model
 
 import (
-	"crypto/rand"
-	"encoding/base64"
 	"fmt"
-	"sync"
 	"time"
 
 	"gopkg.in/mgo.v2/bson"
@@ -18,17 +15,6 @@ type News struct {
 	Detail    string
 	CreatedAt time.Time `bson:"createdAt"`
 	UpdatedAt time.Time `bson:"updatedAt"`
-}
-
-var (
-	newsStorage []News
-	mutexNews   sync.RWMutex
-)
-
-func generateID() string {
-	buf := make([]byte, 16)
-	rand.Read(buf)
-	return base64.StdEncoding.EncodeToString(buf)
 }
 
 // CreateNews inserts news into database
@@ -76,13 +62,28 @@ func GetNews(id string) (*News, error) {
 
 // DeleteNews deletes a news from database
 func DeleteNews(id string) error {
-	objectID := bson.ObjectId(id)
-	if !objectID.Valid() {
+	if !bson.IsObjectIdHex(id) {
 		return fmt.Errorf("invalid id")
 	}
+	objectID := bson.ObjectIdHex(id)
 	s := mongoSession.Copy()
 	defer s.Close()
 	err := s.DB(database).C("news").RemoveId(objectID)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+// UpdateNews updates news
+func UpdateNews(news *News) error {
+	if news.ID == "" {
+		return fmt.Errorf("required id to update")
+	}
+	news.UpdatedAt = time.Now()
+	s := mongoSession.Copy()
+	defer s.Close()
+	err := s.DB(database).C("news").UpdateId(news.ID, news)
 	if err != nil {
 		return err
 	}

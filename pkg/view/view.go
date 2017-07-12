@@ -2,6 +2,7 @@ package view
 
 import (
 	"net/http"
+	"net/url"
 
 	"github.com/acoshift/gonews/pkg/model"
 )
@@ -20,9 +21,19 @@ func News(w http.ResponseWriter, data *model.News) {
 	render(tpNews, w, data)
 }
 
+type AdminLoginData struct {
+	Flash url.Values
+}
+
 // AdminLogin renders admin login view
-func AdminLogin(w http.ResponseWriter, data interface{}) {
+func AdminLogin(w http.ResponseWriter, data *AdminLoginData) {
 	render(tpAdminLogin, w, data)
+	data.Flash.Del("errors")
+}
+
+// AdminRegister renders admin login view
+func AdminRegister(w http.ResponseWriter, data interface{}) {
+	render(tpAdminRegister, w, data)
 }
 
 type AdminListData struct {
@@ -40,6 +51,6 @@ func AdminCreate(w http.ResponseWriter, data interface{}) {
 }
 
 // AdminEdit renders admin login view
-func AdminEdit(w http.ResponseWriter, data interface{}) {
+func AdminEdit(w http.ResponseWriter, data *model.News) {
 	render(tpAdminEdit, w, data)
 }
