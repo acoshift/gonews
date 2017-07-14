@@ -76,3 +76,22 @@ func CheckUserID(id string) (bool, error) {
 	}
 	return true, nil
 }
+
+func GetUsernameFromID(id string) (string, error) {
+	s := mongoSession.Copy()
+	defer s.Close()
+	if !bson.IsObjectIdHex(id) {
+		return "", fmt.Errorf("invalid id")
+	}
+	objectID := bson.ObjectIdHex(id)
+	var user map[string]interface{}
+	err := s.
+		DB(database).
+		C("users").
+		FindId(objectID).
+		One(&user)
+	if err != nil {
+		return "", err
+	}
+	return user["username"].(string), nil
+}

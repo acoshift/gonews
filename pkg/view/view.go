@@ -8,7 +8,8 @@ import (
 )
 
 type IndexData struct {
-	List []*model.News
+	List     []*model.News
+	Username string
 }
 
 // Index renders index view

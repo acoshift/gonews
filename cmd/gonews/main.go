@@ -1,6 +1,8 @@
 package main
 
 import (
+	"encoding/json"
+	"io/ioutil"
 	"log"
 	"net/http"
 	"os"
@@ -9,12 +11,19 @@ import (
 	"github.com/acoshift/gonews/pkg/model"
 )
 
-const (
-	// mongoURL = "mongodb://127.0.0.1:27017"
-	mongoURL = "mongodb://gonews:9NAJHQXu4M9CvKqD@ds147872.mlab.com:47872/gonews"
-)
-
 func main() {
+	var config struct {
+		MongoURL string `json:"mongo_url"`
+	}
+	b, err := ioutil.ReadFile("config.json")
+	if err != nil {
+		log.Fatal(err)
+	}
+	err = json.Unmarshal(b, &config)
+	if err != nil {
+		log.Fatal(err)
+	}
+
 	port := os.Getenv("PORT")
 	if port == "" {
 		port = "8080"
@@ -22,7 +31,7 @@ func main() {
 
 	mux := http.NewServeMux()
 	app.Mount(mux)
-	err := model.Init(mongoURL)
+	err = model.Init(config.MongoURL)
 	if err != nil {
 		log.Fatalf("can not init model; %v", err)
 	}

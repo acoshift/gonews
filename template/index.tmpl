@@ -1,7 +1,11 @@
 {{define "root-body"}}
 <div>
+  {{if .Username}}
+  <p>Hello, {{.Username}}</p>
+  {{else}}
   <a href="/login">Login</a><br>
   <a href="/register">Register</a>
+  {{end}}
   <br>
   <ul>
   {{range .List}}
