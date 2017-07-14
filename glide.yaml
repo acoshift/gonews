@@ -1,0 +1,14 @@
+package: github.com/acoshift/gonews
+import:
+- package: github.com/tdewolff/minify
+  version: ^2.1.0
+  subpackages:
+  - css
+  - html
+  - js
+- package: golang.org/x/crypto
+  subpackages:
+  - bcrypt
+- package: gopkg.in/mgo.v2
+  subpackages:
+  - bson
